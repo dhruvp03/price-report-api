@@ -19,8 +19,7 @@ const aggregateReportSchema = new mongoose.Schema({
     },
     users: [{
         user:{
-            type: mongoose.Types.ObjectId,
-            required: true
+            type: mongoose.Types.ObjectId
         }
     }],
     priceUnit: {
