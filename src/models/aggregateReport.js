@@ -30,6 +30,10 @@ const aggregateReportSchema = new mongoose.Schema({
     price: {
         type:Number,
         required: true
+    },
+    reportNum:{
+        type: Number,
+        default:0
     }
 },{ timestamps: true })
 
