@@ -14,3 +14,5 @@ const generateAuthToken = (user) => {
         throw new Error(e)
     }
 }
+
+module.exports = generateAuthToken
