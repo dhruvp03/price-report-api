@@ -2,19 +2,24 @@ const Report = require('../models/report')
 const AggregateReport = require('../models/aggregateReport')
 
 module.exports.sendReport = async (req,res) => {
-    if(!req.body.reportDetails){
-        res.status(400).send('Please send reportDetails')
-    }
-    const report = Report(req.body.reportDetails)
-
+    
     try {
+
+        if(!req.body.reportDetails){
+            return res.status(400).send('Please send reportDetails')
+        }
+        const report = Report({
+            ...req.body.reportDetails,
+            userID:req.user._id
+        })
+
         await report.save()
         const marketID = req.body.reportDetails.marketID
         const cmdtyID = req.body.reportDetails.cmdtyID
         let aggregateReport = await AggregateReport.findOne({marketID,cmdtyID})
 
         if(!aggregateReport){
-            const aggregateReport = AggregateReport({
+            aggregateReport = new AggregateReport({
                 cmdtyName: report.cmdtyName,
                 cmdtyID: report.cmdtyID,
                 marketID: report.marketID,
@@ -42,22 +47,15 @@ module.exports.sendReport = async (req,res) => {
             await aggregateReport.save()
 
         }
-
-        const return_dict = {
-            _id: aggregateReport._id,
-            cmdtyName: aggregateReport.cmdtyName,
-            cmdtyID: aggregateReport.cmdtyID,
-            marketID: aggregateReport.marketID,
-            marketName: aggregateReport.marketName,
-            users: aggregateReport.users,
-            timestamp: aggregateReport.updatedAt,
-            priceUnit: aggregateReport.priceUnit,
-            price: aggregateReport.price
-        }
-
-        res.status(200).send({aggregateReport:return_dict})
+        const reportID = aggregateReport._id
+        console.log(reportID)
+        res.status(200).send({
+            status:"success",
+            reportID
+        })
     }catch(e){
-        res.status(500).send(e)
+        console.log(e)
+        res.status(500).send()
     }
 
 }

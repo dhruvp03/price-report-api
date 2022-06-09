@@ -8,10 +8,10 @@ const unitConversion = async (req,res,next) => {
         reportDetails.price = (reportDetails.price)/(reportDetails.convFctr);
         reportDetails.convFctr = 1;
         reportDetails.priceUnit = "Kg";
-        next()
     }catch(e){
         throw new Error('Error '+ e)
     }
+    next()
 }
 
 module.exports = unitConversion

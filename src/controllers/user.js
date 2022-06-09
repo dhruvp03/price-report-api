@@ -34,6 +34,7 @@ const userLogin = async (req,res) => {
 
         res.status(200).send(return_dict)
     }catch(e) {
+        console.log(e)
         res.status(400).send(e)
     }
 }

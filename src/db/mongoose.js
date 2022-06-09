@@ -9,9 +9,17 @@ module.exports.connectDatabase = async () => {
     }
 
     await mongoose.connect(connectionURL,mongooseOpts)
+    console.log('connected db')
 }
 
 module.exports.closeDatabase = async () => {
     await mongoose.connection.close();
+    console.log('closed connection')
 
+}
+
+module.exports.dropAndCloseDatabase = async () => {
+    await mongoose.connection.db.dropDatabase();
+    await mongoose.connection.close();
+    console.log('Closed and dropped db')
 }
