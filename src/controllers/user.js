@@ -17,7 +17,7 @@ const userRegister = async (req,res) => {
         res.status(200).send(return_dict)
 
     }catch(e){
-        res.send(e)
+        res.status(500).send(e)
     }
 
 }

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js"
+    "test": "jest",
+    "dev": "nodemon ./src/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +17,8 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.16"
+    "jest": "^27.0.0",
+    "nodemon": "^2.0.16",
+    "supertest": "^6.2.3"
   }
 }

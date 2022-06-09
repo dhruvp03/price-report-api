@@ -10,6 +10,8 @@ const unitConversion = async (req,res,next) => {
         reportDetails.priceUnit = "Kg";
         next()
     }catch(e){
-        res.status(500).send(e)
+        throw new Error('Error '+ e)
     }
 }
+
+module.exports = unitConversion

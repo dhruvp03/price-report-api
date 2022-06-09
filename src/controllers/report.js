@@ -1,7 +1,7 @@
 const Report = require('../models/report')
 const AggregateReport = require('../models/aggregateReport')
 
-const sendReport = async (req,res) => {
+module.exports.sendReport = async (req,res) => {
     if(!req.body.reportDetails){
         res.status(400).send('Please send reportDetails')
     }
@@ -25,20 +25,6 @@ const sendReport = async (req,res) => {
             })
             aggregateReport.users = aggregateReport.users.concat({user:req.user._id})
             await aggregateReport.save()
-
-            // const return_dict = {
-            //     _id: aggregateReport._id,
-            //     cmdtyName: aggregateReport.cmdtyName,
-            //     cmdtyID: aggregateReport.cmdtyID,
-            //     marketID: aggregateReport.marketID,
-            //     marketName: aggregateReport.marketName,
-            //     users: aggregateReport.users,
-            //     timestamp: aggregateReport.updatedAt,
-            //     priceUnit: aggregateReport.priceUnit,
-            //     price: aggregateReport.price
-            // }
-
-            // res.status(200).send({aggregateReport:return_dict})
 
         }
         else{
@@ -76,7 +62,7 @@ const sendReport = async (req,res) => {
 
 }
 
-const getAggregateReport = async (req,res) => {
+module.exports.getAggregateReport = async (req,res) => {
     const _id = req.query.reportID
 
     try {
@@ -88,9 +74,4 @@ const getAggregateReport = async (req,res) => {
     }catch(e){
         res.status(500).send(e)
     }
-}
-
-module.exports = {
-    sendReport,
-    getAggregateReport
 }

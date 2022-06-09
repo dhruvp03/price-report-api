@@ -36,6 +36,6 @@ const aggregateReportSchema = new mongoose.Schema({
     }
 },{ timestamps: true })
 
-const aggregateReport = mongoose.Model('aggregateReport',aggregateReportSchema)
+const aggregateReport = mongoose.model('aggregateReport',aggregateReportSchema)
 
 module.exports = aggregateReport

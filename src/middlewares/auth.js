@@ -20,3 +20,5 @@ const auth = async (req,res,next) => {
     req.token = token
     next()
 }
+
+module.exports = auth
