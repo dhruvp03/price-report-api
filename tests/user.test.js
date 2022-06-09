@@ -69,6 +69,19 @@ describe('sending reports', ()=>{
         })
 
         reportID_ = body.reportID
+
+        const responseBody = await request.post('/reports').set('Authorization', ('Bearer '+ jwt_token)).send({
+            reportDetails:{
+                marketID:"market-1",
+                marketName:"Vashi Navi Mumbai",
+                cmdtyID:"cmdty-1",
+                marketType:"Mandi",
+                cmdtyName:"Potato",
+                priceUnit:"Quintal",
+                convFctr: 100,
+                price: 1600
+            }
+        })
         
         expect(body).toEqual(
             expect.objectContaining({
@@ -78,6 +91,7 @@ describe('sending reports', ()=>{
         )
     
         expect(statusCode).toEqual(200)
+        expect(responseBody.body.reportID).toBe(reportID_)
     })
 
     test('it should return the aggregate report by ID', async ()=>{
@@ -89,6 +103,8 @@ describe('sending reports', ()=>{
         const jwt_token = authResponse.body.token
 
         const { body, statusCode } = await request.get(`/reports?reportID=${reportID_}`).set('Authorization', ('Bearer '+ jwt_token))
+
+        console.log(body)
 
         expect(statusCode).toBe(200)
         expect(body).toEqual(
