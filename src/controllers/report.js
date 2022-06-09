@@ -64,12 +64,27 @@ module.exports.getAggregateReport = async (req,res) => {
     const _id = req.query.reportID
 
     try {
-        const aggregateReport = await AggregateReport.findByID(_id)
+        const aggregateReport = await AggregateReport.findOne({_id})
         if(!aggregateReport){
             return res.status(404).send('No such report')
         }
-        res.status(200).send(aggregateReport)
+
+
+        const return_dict = {
+            _id: aggregateReport._id,
+            cmdtyName: aggregateReport.cmdtyName,
+            cmdtyID: aggregateReport.cmdtyID,
+            marketID: aggregateReport.marketID,
+            marketName: aggregateReport.marketName,
+            users: aggregateReport.users,
+            timestamp: aggregateReport.updatedAt,
+            priceUnit: aggregateReport.priceUnit,
+            price: aggregateReport.price
+        }
+
+        res.status(200).send(return_dict)
     }catch(e){
-        res.status(500).send(e)
+        console.log(e)
+        res.status(500).send()
     }
 }
