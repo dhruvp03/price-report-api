@@ -10,7 +10,7 @@ beforeAll(async () => await db.connectDatabase());
 
 afterAll(async () => await db.dropAndCloseDatabase());
 
-describe('User Created When', ()=>{
+describe('Testing User Routes', ()=>{
     test('Testing creation of user', async ()=>{
         const { body,statusCode } = await request.post('/user/register').send({
             name: "Test User",
@@ -45,7 +45,7 @@ describe('User Created When', ()=>{
     })
 })
 
-describe('sending reports', ()=>{
+describe('Testing Report Routes', ()=>{
     let reportID_;
     test('it should return an aggregate report ID',async ()=>{
         const authResponse = await request.post('/user/login').send({
