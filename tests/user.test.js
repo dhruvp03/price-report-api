@@ -8,7 +8,7 @@ const request = supertest(app)
 
 beforeAll(async () => await db.connectDatabase());
 
-afterAll(async () => await db.closeDatabase());
+afterAll(async () => await db.dropAndCloseDatabase());
 
 describe('User Created When', ()=>{
     test('Testing creation of user', async ()=>{
