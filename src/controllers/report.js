@@ -69,6 +69,11 @@ module.exports.getAggregateReport = async (req,res) => {
             return res.status(404).send('No such report')
         }
 
+        const userArray = []
+
+        aggregateReport.users.forEach((object)=>{
+            userArray.push(object._id)
+        })
 
         const return_dict = {
             _id: aggregateReport._id,
@@ -76,7 +81,7 @@ module.exports.getAggregateReport = async (req,res) => {
             cmdtyID: aggregateReport.cmdtyID,
             marketID: aggregateReport.marketID,
             marketName: aggregateReport.marketName,
-            users: aggregateReport.users,
+            users: userArray,
             timestamp: aggregateReport.updatedAt,
             priceUnit: aggregateReport.priceUnit,
             price: aggregateReport.price
