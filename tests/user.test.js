@@ -29,7 +29,7 @@ describe('User Created When', ()=>{
     });
 
     test('User Authentication', async () => {
-        const {body,statusCode} = (await request.post('/user/login')).setEncoding({
+        const {body,statusCode} = await request.post('/user/login').send({
             email: "test@example.com",
             password:"testuser123"
         })
@@ -42,5 +42,39 @@ describe('User Created When', ()=>{
             })
         );
         expect(statusCode).toBe(200)
+    })
+})
+
+describe('sending reports', ()=>{
+    test('it should return an aggregate report ID',async ()=>{
+        const authResponse = await request.post('/user/login').send({
+            email: "test@example.com",
+            password:"testuser123"
+        })
+    
+        const jwt_token = authResponse.body.token
+    
+        const { body, statusCode } = await request.post('/reports').set('Authorization', ('Bearer '+ jwt_token)).send({
+            reportDetails:{
+                marketID:"market-1",
+                marketName:"Vashi Navi Mumbai",
+                cmdtyID:"cmdty-1",
+                marketType:"Mandi",
+                cmdtyName:"Potato",
+                priceUnit:"Pack",
+                convFctr: 50,
+                price: 700
+            }
+        })
+
+    
+        expect(body).toEqual(
+            expect.objectContaining({
+                status:"success",
+                reportID: expect.any(String)
+            })
+        )
+    
+        expect(statusCode).toEqual(200)
     })
 })
